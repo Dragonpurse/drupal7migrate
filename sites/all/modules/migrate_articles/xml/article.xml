@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<articles>
+	<article>
+	  <id>22</id>
+	  <title>Makers of Ladybug Green</title>
+	  <teaser>Yeay teaser!</teaser>
+	  <body>Redwood Valley</body>
+	</article>
+	<article>
+	  <id>21</id>
+	  <title>Makers of Ladybug Blue</title>
+	  <teaser>Yeay teaser!</teaser>
+	  <body>Redwood Valley</body>
+	</article>
+</articles>

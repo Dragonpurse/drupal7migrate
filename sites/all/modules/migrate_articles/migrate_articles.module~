@@ -1,0 +1,49 @@
+<?php 
+class ArticleMigration extends XMLMigration {
+
+  public function __construct() {
+    parent::__construct();
+    $this->description = t('XML feed of articles');
+
+    $fields = array(
+      'title' => t('Title'),
+      'teaser' => t('Teaser'),
+      'body' => t('Article Body'),
+    );
+
+    $this->map = new MigrateSQLMap($this->machineName, array(
+      'id' => array(
+        'type' => 'varchar',
+        'not null' => TRUE,
+      )
+    ), MigrateDestinationRole::getKeySchema());
+
+    $xml_folder = DRUPAL_ROOT . '/' . drupal_get_path('module', 'migrate_articles') . '/xml/';
+    $item_xpath = '/article';
+    $item_ID_xpath = 'id';
+
+    // Getting multiple files from xml folder
+    $urls = array();
+    foreach (glob($xml_folder."/*.xml") as $filename) {
+      array_push($urls, $filename);
+    }
+
+    $this->source = new MigrateSourceXML($urls, $item_xpath, $item_ID_xpath, $fields);
+    $this->destination = new MigrateDestinationNode('article');
+
+    $this->addFieldMapping('body', 'body')->arguments(array('format' => 'filtered_html'))->xpath('/article/body');
+    $this->addFieldMapping('body:summary', 'teaser')->arguments(array('format' => 'filtered_html'))->xpath('/article/teaser');
+    $this->addFieldMapping('title', 'title')->xpath('/article/title');
+  }
+
+
+  /* Implement a prepareRow method to manipulate the source row before saving */
+  public function prepareRow($row) {
+    return TRUE;
+  }
+
+  // Rollback function
+  protected function rollback() {
+    parent::rollback();
+  }
+}

@@ -1,0 +1,10 @@
+name = "Migrate Articles"
+description = "Module to migrate articles"
+package = "Migration"
+core = 7.x
+dependencies[] = migrate
+
+
+#  include the files that contain your Migrate classes 
+files[] = ArticleMigration.migrate.inc
+files[] = migrate_articles.module

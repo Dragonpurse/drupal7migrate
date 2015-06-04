@@ -1,0 +1,11 @@
+<?php
+
+	/**
+	* Implements hook_enable().
+	*/
+	function migrate_articles_enable() {
+	  Migration::registerMigration('ArticleMigration');
+	  $migration = Migration::getInstance('ArticleMigration');
+	  $result = $migration->processImport();
+	}	
+?>
